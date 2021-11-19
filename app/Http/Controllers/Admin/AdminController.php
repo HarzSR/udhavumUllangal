@@ -84,8 +84,17 @@ class AdminController extends Controller
         //
     }
 
+    //
+
     public function dashboard()
     {
         return view('admin.admin_dashboard');
+    }
+
+    //
+
+    public function login(Request $request)
+    {
+        return view('admin.admin_login');
     }
 }

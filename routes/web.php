@@ -25,6 +25,14 @@ Route::prefix('/admin')->namespace('Admin')->group(function (){
 
     // Admin Routes
 
-    Route::get('dashboard', [\App\Http\Controllers\Admin\AdminController::class, 'dashboard'])->name('Dashboard');
+    Route::match(['get', 'post'], '/', [\App\Http\Controllers\Admin\AdminController::class, 'login'])->name('Login');
+
+    Route::group(['middleware' => ['admin']], function () {
+
+        // Protected Routes
+
+        Route::get('dashboard', [\App\Http\Controllers\Admin\AdminController::class, 'dashboard'])->name('Dashboard');
+
+    });
 
 });
