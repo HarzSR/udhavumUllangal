@@ -25,7 +25,8 @@ $(function () {
     //Bootstrap datepicker plugin
     $('#bs_datepicker_container input').datepicker({
         autoclose: true,
-        container: '#bs_datepicker_container'
+        container: '#bs_datepicker_container',
+        format: "dd/mm/yyyy"
     });
 
     $('#bs_datepicker_component_container').datepicker({

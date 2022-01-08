@@ -31,7 +31,20 @@ Route::prefix('/admin')->namespace('Admin')->group(function (){
 
         // Protected Routes
 
+        // Dashboard Routes
+
         Route::get('dashboard', [\App\Http\Controllers\Admin\AdminController::class, 'dashboard'])->name('Dashboard');
+        Route::get('profile', [\App\Http\Controllers\Admin\AdminController::class, 'profile'])->name('Profile');
+        Route::post('check-current-password', [\App\Http\Controllers\Admin\AdminController::class, 'checkPwd']);
+        Route::post('update-pwd', [\App\Http\Controllers\Admin\AdminController::class, 'profileUpdate']);
+        Route::get('logout', [\App\Http\Controllers\Admin\AdminController::class, 'logout']);
+
+        // Donor Routes
+
+        Route::match(['get', 'post'], '/add-donor', [\App\Http\Controllers\Admin\DonorController::class, 'addDonor'])->name('Add Individual Donor');
+        Route::match(['get', 'post'], '/add-corporate-donor', [\App\Http\Controllers\Admin\DonorController::class, 'addCorporateDonor'])->name('Add Corporate Donor');
+        Route::get('/view-donors', [\App\Http\Controllers\Admin\DonorController::class, 'viewDonor'])->name('View Donor');
+        Route::post('/update-donor-status', [\App\Http\Controllers\Admin\DonorController::class, 'updateDonorStatus']);
 
     });
 

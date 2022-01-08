@@ -6,7 +6,7 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <title>Sign In | Udhavum Ullangal</title>
         <!-- Favicon-->
-        <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+        <link rel="icon" href="{{ url("images/admin_images/logos/favicon.ico") }}" type="image/x-icon">
 
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
@@ -30,17 +30,41 @@
             <div class="logo">
                 <a href="javascript:void(0);">Admin<b> UU</b></a>
                 <small>Udhavum Ullangal CRM</small>
+                <br>
+                @if(Session::has('error_message'))
+                    <div class="alert alert-warning alert-dismissible" role="alert">
+                        {{-- <strong>Oopsy!</strong> Something is wrong. Please try again. --}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Oopsy!</strong> {{ Session::get('error_message') }}.
+                    </div>
+                @endif
+                @if(Session::has('success_message'))
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Bam!</strong> You have logged out. See you soon. Have a great time.
+                    </div>
+                @endif
+                @if($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             </div>
             <div class="card">
                 <div class="body">
-                    <form id="sign_in" method="POST">
+                    <form id="sign_in" name="sign_in" method="POST" action="{{ url('/admin') }}" enctype="application/x-www-form-urlencoded">
+                        @csrf
                         <div class="msg">Sign in to start your session</div>
                         <div class="input-group">
                                 <span class="input-group-addon">
                                     <i class="material-icons">email</i>
                                 </span>
                             <div class="form-line">
-                                <input type="text" class="form-control" name="username" placeholder="Email" required autofocus>
+                                <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="{{ old('email') }}" required autofocus>
                             </div>
                         </div>
                         <div class="input-group">
@@ -48,7 +72,7 @@
                                     <i class="material-icons">lock</i>
                                 </span>
                             <div class="form-line">
-                                <input type="password" class="form-control" name="password" placeholder="Password" required>
+                                <input type="password" class="form-control" name="password" id="password" placeholder="Password" value="{{ old('password') }}" required>
                             </div>
                         </div>
                         <div class="row">
